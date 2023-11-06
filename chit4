@@ -1,0 +1,73 @@
+-- Create the student table
+CREATE TABLE student (
+    S_ID INT PRIMARY KEY,
+    name VARCHAR(255),
+    dept_name VARCHAR(255),
+    tot_cred INT
+);
+
+-- Insert values into the student table
+INSERT INTO student (S_ID, name, dept_name, tot_cred) VALUES (1, 'Alice', 'Computer', 120);
+INSERT INTO student (S_ID, name, dept_name, tot_cred) VALUES (2, 'Bob', 'Math', 90);
+INSERT INTO student (S_ID, name, dept_name, tot_cred) VALUES (3, 'Charlie', 'Computer', 110);
+INSERT INTO student (S_ID, name, dept_name, tot_cred) VALUES (4, 'David', 'Physics', 80);
+INSERT INTO student (S_ID, name, dept_name, tot_cred) VALUES (5, 'Eve', 'Physics', 95);
+
+-- Create the instructor table
+CREATE TABLE instructor (
+    T_ID INT PRIMARY KEY,
+    name VARCHAR(255),
+    dept_name VARCHAR(255),
+    salary DECIMAL(10, 2)
+);
+
+-- Insert values into the instructor table
+INSERT INTO instructor (T_ID, name, dept_name, salary) VALUES (1, 'John', 'Computer', 45000.00);
+INSERT INTO instructor (T_ID, name, dept_name, salary) VALUES (2, 'Mary', 'Math', 50000.00);
+INSERT INTO instructor (T_ID, name, dept_name, salary) VALUES (3, 'Peter', 'Computer', 48000.00);
+INSERT INTO instructor (T_ID, name, dept_name, salary) VALUES (4, 'Linda', 'Physics', 52000.00);
+INSERT INTO instructor (T_ID, name, dept_name, salary) VALUES (5, 'Robert', 'Physics', 49000.00);
+
+-- Create the course table
+CREATE TABLE course (
+    course_id INT PRIMARY KEY,
+    title VARCHAR(255),
+    dept_name VARCHAR(255),
+    credits INT
+);
+
+-- Insert values into the course table
+INSERT INTO course (course_id, title, dept_name, credits) VALUES (101, 'DBMS', 'Computer', 3);
+INSERT INTO course (course_id, title, dept_name, credits) VALUES (102, 'Calculus', 'Math', 4);
+INSERT INTO course (course_id, title, dept_name, credits) VALUES (103, 'Data Structures', 'Computer', 3);
+INSERT INTO course (course_id, title, dept_name, credits) VALUES (104, 'Quantum Mechanics', 'Physics', 4);
+INSERT INTO course (course_id, title, dept_name, credits) VALUES (105, 'Algorithms', 'Computer', 3);
+
+-- Queries
+
+-- i. Find the average salary of instructors in those departments where the average salary is more than Rs. 42000/-.
+SELECT dept_name, AVG(salary) AS avg_salary
+FROM instructor
+GROUP BY dept_name
+HAVING AVG(salary) > 42000;
+
+-- ii. Increase the salary of each instructor in the Computer department by 10%.
+UPDATE instructor
+SET salary = salary * 1.10
+WHERE dept_name = 'Computer';
+
+-- iii. Find the names of instructors whose names are neither 'Amol' nor 'Amit'.
+SELECT name
+FROM instructor
+WHERE name NOT IN ('Amol', 'Amit');
+
+-- iv. Find the names of students whose names contain 'am' as a substring.
+SELECT name
+FROM student
+WHERE name LIKE '%am%';
+
+-- v. Find the names of students from the Computer department who take "DBMS" courses.
+SELECT s.name
+FROM student s
+JOIN course c ON s.dept_name = c.dept_name
+WHERE s.dept_name = 'Computer' AND c.title = 'DBMS';
