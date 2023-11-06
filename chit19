@@ -1,0 +1,19 @@
+CREATE TABLE emp (
+  Eno INT AUTO_INCREMENT PRIMARY KEY,
+  Ename VARCHAR(50) NOT NULL,
+  Address VARCHAR(50) DEFAULT 'Nashik',
+  Joindate date
+)AUTO_INCREMENT = 101;
+
+
+ALTER TABLE emp ADD Post VARCHAR(50);
+
+INSERT INTO emp (Eno, Ename, Address, Joindate,Post) VALUES (NULL, 'Jane Smith', 'New York', '2023-11-07',"HR");
+INSERT INTO emp (Eno, Ename, Address, Joindate,Post) VALUES (NULL, 'Kunal', 'India', '2023-12-07',"ceo");
+INSERT INTO emp (Eno, Ename, Address, Joindate,Post) VALUES (NULL, 'shashu', 'england', '2023-10-07',"servant");
+
+
+CREATE INDEX idx_ename ON emp (Ename);
+
+
+CREATE VIEW emp_view AS SELECT Ename, Post FROM emp;
